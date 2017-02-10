@@ -28,6 +28,21 @@ var albumMarconi = {
      ]
  };
 
+var albumTheBeatles = {
+		title: 'Abbey Road',
+		artist: 'The Beatles',
+		label: 'EMI',
+		year: '1969',
+		albumArtUrl: 'assets/images/album_covers/11.png',
+		songs: [
+				{ title: 'Come Together', duration: '2:10' },
+				{ title: 'Something', duration: '2:15' },
+				{ title: 'Oh! Darling', duration: '2:00' },
+				{ title: 'Here Comes the Sun', duration: '2:04' },
+				{ title: 'Because', duration: '2:07' }
+		]
+};
+
  var createSongRow = function(songNumber, songName, songLength) {
      var template =
         '<tr class="album-view-song-item">'
@@ -40,13 +55,14 @@ var albumMarconi = {
      return template;
  };
 
+var albumTitle = document.getElementsByClassName('album-view-title')[0];
+var albumArtist = document.getElementsByClassName('album-view-artist')[0];
+var albumReleaseInfo = document.getElementsByClassName('album-view-release-info')[0];
+var albumImage = document.getElementsByClassName('album-cover-art')[0];
+var albumSongList = document.getElementsByClassName('album-view-song-list')[0];
+
  var setCurrentAlbum = function(album) {
-     var albumTitle = document.getElementsByClassName('album-view-title')[0];
-     var albumArtist = document.getElementsByClassName('album-view-artist')[0];
-     var albumReleaseInfo = document.getElementsByClassName('album-view-release-info')[0];
-     var albumImage = document.getElementsByClassName('album-cover-art')[0];
-     var albumSongList = document.getElementsByClassName('album-view-song-list')[0];
- 
+	 
      albumTitle.firstChild.nodeValue = album.title;
      albumArtist.firstChild.nodeValue = album.artist;
      albumReleaseInfo.firstChild.nodeValue = album.year + ' ' + album.label;
@@ -58,8 +74,20 @@ var albumMarconi = {
          albumSongList.innerHTML += createSongRow(i + 1, album.songs[i].title, album.songs[i].duration);
      }
  };
+
  
- window.onload = function() {
-     setCurrentAlbum(albumPicasso);
- };
+window.onload = function() {
+	 setCurrentAlbum(albumPicasso);
+
+	 var albumArray = [albumPicasso, albumMarconi, albumTheBeatles];
+	 var index = 1;
+
+	 albumImage.addEventListener('click', function() {
+	 		setCurrentAlbum(albumArray[index]);
+		  index++;
+		  if (index == albumArray.length) {
+				index = 0;
+			}
+	 });
+};
  
