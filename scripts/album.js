@@ -62,10 +62,16 @@ var setCurrentAlbum = function(album) {
 var findParentByClassName = function(element, theClass) {
 		if (element) {
 				var currentParent = element.parentElement;
-				while (currentParent.className != theClass && currentParent.className !== null) {
+				if (currentParent.className === null) {
+					console.log("No parent found");
+				} else if (currentParent.className!= theClass && currentParent.className !== null) {
+					while (currentParent.className != theClass && currentParent.className !== null) {
 						currentParent = currentParent.parentElement;
-				}
-				return currentParent;
+					}
+					return currentParent;
+				} else {
+					console.log("No parent found with that class name");
+				}	
 		}
 };
 
@@ -78,6 +84,7 @@ var getSongItem = function(element) {
 				return findParentByClassName(element, 'album-view-song-item').querySelector('.song-item-number');
 			case 'ion-play':
 			case 'album-song-button':
+			case 'ion-pause':
 				return findParentByClassName(element, 'song-item-number');
 			default: 
 				return;
@@ -105,9 +112,10 @@ var songListContainer = document.getElementsByClassName('album-view-song-list')[
 var songRows = document.getElementsByClassName('album-view-song-item');
 
 var playButtonTemplate = '<a class="album-song-button"><span class="ion-play"></span></a>';
-var pauseButtonTemplate = '<a  class="album-song-button"><span class="ion-pause"></span></a>';
+var pauseButtonTemplate = '<a class="album-song-button"><span class="ion-pause"></span></a>';
 
-var currentlyPlayingSong = null;
+ var currentlyPlayingSong = null;
+
  
 window.onload = function() {
 	setCurrentAlbum(albumPicasso);
