@@ -79,6 +79,8 @@ var getSongItem = function(element) {
 			case 'ion-play':
 			case 'album-song-button':
 				return findParentByClassName(element, 'song-item-number');
+			case 'album-view-song-item':
+				return element.querySelector('.song-item-number');
 			default: 
 				return;
 		}
